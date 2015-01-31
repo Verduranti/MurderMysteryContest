@@ -1,0 +1,19 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    </style>
+
+    <style name="LayoutTheme">
+        <item name="android:background">#f8ecc2</item>
+    </style>
+
+    <style name="Buttons">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/plate2</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+
+</resources>
