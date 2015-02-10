@@ -13,7 +13,8 @@
     <Button
         style="@style/Buttons"
         android:text="@string/newClue"
-        android:id="@+id/newClueButton" />
+        android:id="@+id/newClueButton"
+        android:onClick="selfDestruct"/>
 
     <Button
         style="@style/Buttons"
