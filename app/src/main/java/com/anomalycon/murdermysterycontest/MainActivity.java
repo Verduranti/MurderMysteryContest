@@ -7,10 +7,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
 
+    //intents need primatives. not a good way to pass around classes
+    //using Dagger instead, hopefully
     //public final static String EXTRA_MESSAGE = "com.anomalycon.murdermysteryapp.MESSAGE";
 
     @Override
@@ -18,15 +21,39 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Button button = (Button) findViewById(R.id.newClueButton);
-        button.setOnClickListener(new View.OnClickListener() {
+        final Button newClueButton = (Button) findViewById(R.id.newClueButton);
+        newClueButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                System.out.println("New Clue Button Click");
-                Intent intent = new Intent(v.getContext(), CameraActivity.class);
+                System.out.println("New Clue Button Click"); //test
+                Toast.makeText(getApplicationContext(), "New Clue Button Click", Toast.LENGTH_LONG).show(); //test
+                Intent intent = new Intent(v.getContext(), NewClueActivity.class);
                 //intent.putExtra(EXTRA_MESSAGE, message);
                 startActivity(intent);
             }
         });
+
+        final Button viewClueButton = (Button) findViewById(R.id.viewClueButton);
+        viewClueButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                System.out.println("View Clue Button Click"); //test
+                Toast.makeText(getApplicationContext(), "View Clue Button Click", Toast.LENGTH_LONG).show(); //test
+            }
+        });
+
+        final Button guessButton = (Button) findViewById(R.id.guessButton);
+        guessButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                System.out.println("Guess Button Click"); //test
+                Toast.makeText(getApplicationContext(), "Guess Button Click", Toast.LENGTH_LONG).show(); //test
+            }
+        });
+
+        //This might not be the best place for this
+        //Also - delete this when the server-side stuff goes in
+        //Initialize the Clues:
+//        ClueManager clues = ClueManager.getInstance();
+//        clues.fillInClues(this);
+        //End stuff to be deleted
     }
 
     @Override

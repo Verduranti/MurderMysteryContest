@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- this is temporary, com.anomalycon.clues will be stored outside the app in the real version -->
+<resources>
+    <string-array name="clue_array">
+        <item>Mercury|Hermes</item>
+        <item>Venus|Aphrodite</item>
+        <item>Earth|Terra</item>
+        <item>Mars|Aeries</item>
+        <item>Saturn|Athena</item>
+        <item>Neptune|Poseidon</item>
+        <item>Uranus|Artemis</item>
+        <item>Jupiter|Zeus</item>
+    </string-array>
+</resources>

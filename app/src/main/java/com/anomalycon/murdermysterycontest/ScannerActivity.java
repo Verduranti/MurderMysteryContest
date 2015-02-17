@@ -12,7 +12,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CameraActivity extends Activity {
+public class ScannerActivity extends Activity {
 
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
     private Uri fileUri;
@@ -81,4 +81,3 @@ public class CameraActivity extends Activity {
     }
 
 }
-
