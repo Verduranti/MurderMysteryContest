@@ -72,6 +72,7 @@ public class ClueManager implements ClueInterface {
     public void saveClue(Key clueName) {
         if(foundClueMap.containsKey(clueName)) {
             //Already saved - error handling?
+            System.out.println("Shouldn't be here");
         }
         else if(allClueMap.containsKey(clueName)) {
             foundClueMap.put(clueName, allClueMap.get(clueName));

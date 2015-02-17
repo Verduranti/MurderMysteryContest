@@ -1,6 +1,5 @@
 package com.anomalycon.clues;
 
-import android.app.Application;
 import android.content.Context;
 
 import com.anomalycon.murdermysterycontest.NewClueActivity;
@@ -17,10 +16,11 @@ public class ClueModule {
     //private Application application;
     private Context context;
 
-    public ClueModule(Application app) {
+    public ClueModule(Context appContext) {
         //this.application = crm;
         //this.context = this.application.getApplicationContext();
-        this.context = app.getApplicationContext();
+        //this.context = app.getApplicationContext();
+        this.context = appContext;
     }
 
     @Provides

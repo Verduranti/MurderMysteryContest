@@ -9,9 +9,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.anomalycon.clues.ClueInterface;
+import com.anomalycon.clues.ClueModule;
+
+import java.util.Arrays;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import dagger.ObjectGraph;
+
 
 public class MainActivity extends ActionBarActivity {
+    private ObjectGraph objectGraph;
 
+    @Inject
+    ClueInterface cif;
     //intents need primatives. not a good way to pass around classes
     //using Dagger instead, hopefully
     //public final static String EXTRA_MESSAGE = "com.anomalycon.murdermysteryapp.MESSAGE";
@@ -19,6 +32,11 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Dagger things
+        Object[] modules = getModules().toArray();
+        objectGraph = ObjectGraph.create(modules);
+
         setContentView(R.layout.activity_main);
 
         final Button newClueButton = (Button) findViewById(R.id.newClueButton);
@@ -44,9 +62,23 @@ public class MainActivity extends ActionBarActivity {
         guessButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 System.out.println("Guess Button Click"); //test
-                Toast.makeText(getApplicationContext(), "Guess Button Click", Toast.LENGTH_LONG).show(); //test
+                 //test
+                if(cif == null){
+                    Toast.makeText(getApplicationContext(), "Still broken", Toast.LENGTH_LONG).show();
+
+                }
+                else if(cif.countFoundClues()/cif.countAllClues() < 0.8)
+                {
+                    Toast.makeText(getApplicationContext(), "Not enough clues. Keep hunting!", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    //Replace this with form
+                    Toast.makeText(getApplicationContext(), "You may guess now", Toast.LENGTH_LONG).show();
+                }
             }
         });
+
 
         //This might not be the best place for this
         //Also - delete this when the server-side stuff goes in
@@ -78,4 +110,12 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    protected List<Object> getModules() {
+        return Arrays.<Object>asList(new ClueModule(this.getApplicationContext()));
+    }
+
+    public ObjectGraph getObjectGraph() {
+        return this.objectGraph;
+    }
 }

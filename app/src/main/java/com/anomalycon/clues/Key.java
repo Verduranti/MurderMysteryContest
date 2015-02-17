@@ -23,4 +23,27 @@ public class Key {
     public String getKey() {
         return keyword;
     }
+
+    //unnecessary oops
+//    @Override
+//    public boolean equals(Object object) {
+//        boolean result = false;
+//        if (object == null || object.getClass() != getClass()) {
+//            result = false;
+//        } else {
+//            Key key = (Key) object;
+//            if (this.keyword == getKey()) {
+//                result = true;
+//            }
+//        }
+//        return result;
+//    }
+//
+//    @Override
+//    public int hashCode(Object object) {
+//        return 1;
+//    }
+
+
+
 }
