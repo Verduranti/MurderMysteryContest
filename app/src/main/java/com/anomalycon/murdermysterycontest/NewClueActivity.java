@@ -20,6 +20,11 @@ public class NewClueActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Dagger things
+        ContestApplication cApp = (ContestApplication) getApplication();
+        cApp.getObjectGraph().inject(this);
+
         setContentView(R.layout.activity_new_clue);
 
         EditText editText = (EditText) findViewById(R.id.cluePassword);
@@ -43,7 +48,13 @@ public class NewClueActivity extends Activity {
         EditText editText = (EditText) findViewById(R.id.cluePassword);
         String password = editText.getText().toString();
         Key key = new Key(password);
-        cif.saveClue(key);
+        if(cif == null) {
+            //Crappy error handling again
+            System.out.println("FAIL");
+        }
+        else {
+            cif.saveClue(key);
+        }
 
     }
 

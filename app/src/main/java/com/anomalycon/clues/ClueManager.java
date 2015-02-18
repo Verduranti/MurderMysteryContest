@@ -30,7 +30,7 @@ public class ClueManager implements ClueInterface {
     public ClueManager(Context context) {
         foundClueMap = new HashMap<>();
         allClueMap = new HashMap<>();
-        this.fillInClues(context);
+        fillInClues(context);
     }
 
 //    public static ClueManager getInstance(){

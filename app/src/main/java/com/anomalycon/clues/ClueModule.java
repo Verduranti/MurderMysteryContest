@@ -2,6 +2,7 @@ package com.anomalycon.clues;
 
 import android.content.Context;
 
+import com.anomalycon.murdermysterycontest.MainActivity;
 import com.anomalycon.murdermysterycontest.NewClueActivity;
 
 import javax.inject.Singleton;
@@ -10,7 +11,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module(
-        injects = NewClueActivity.class
+        injects = { MainActivity.class, NewClueActivity.class }
 )
 public class ClueModule {
     //private Application application;
@@ -31,7 +32,7 @@ public class ClueModule {
 
     @Provides
     @Singleton
-    public ClueInterface provideClueInterface(/*@InjectAndroidApplicationContext*/ Context context) {
+    public ClueInterface provideClueInterface(/*@InjectAndroidApplicationContext */Context context) {
         return new ClueManager(context);
     }
 }

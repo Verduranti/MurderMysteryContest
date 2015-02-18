@@ -10,19 +10,11 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.anomalycon.clues.ClueInterface;
-import com.anomalycon.clues.ClueModule;
-
-import java.util.Arrays;
-import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.ObjectGraph;
-
 
 public class MainActivity extends ActionBarActivity {
-    private ObjectGraph objectGraph;
-
     @Inject
     ClueInterface cif;
     //intents need primatives. not a good way to pass around classes
@@ -34,8 +26,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         //Dagger things
-        Object[] modules = getModules().toArray();
-        objectGraph = ObjectGraph.create(modules);
+        ContestApplication cApp = (ContestApplication) getApplication();
+        cApp.getObjectGraph().inject(this);
 
         setContentView(R.layout.activity_main);
 
@@ -62,14 +54,16 @@ public class MainActivity extends ActionBarActivity {
         guessButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 System.out.println("Guess Button Click"); //test
-                 //test
+
                 if(cif == null){
+                    //Add some better error handling here.
                     Toast.makeText(getApplicationContext(), "Still broken", Toast.LENGTH_LONG).show();
 
                 }
                 else if(cif.countFoundClues()/cif.countAllClues() < 0.8)
                 {
                     Toast.makeText(getApplicationContext(), "Not enough clues. Keep hunting!", Toast.LENGTH_LONG).show();
+                    System.out.println(Integer.toString(cif.countFoundClues())+" "+Integer.toString(cif.countAllClues()));
                 }
                 else
                 {
@@ -111,11 +105,5 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    protected List<Object> getModules() {
-        return Arrays.<Object>asList(new ClueModule(this.getApplicationContext()));
-    }
 
-    public ObjectGraph getObjectGraph() {
-        return this.objectGraph;
-    }
 }
