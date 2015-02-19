@@ -1,7 +1,9 @@
 package com.anomalycon.clues;
 
-/**
- * Created by verduranti on 2/10/15.
+/* Class controls what a Clue looks like
+ *
+ * Currently hold a string (the password that accesses it) and a longer string of "story text"
+ *
  */
 public class Clue {
 

@@ -13,35 +13,31 @@ import com.anomalycon.clues.ClueInterface;
 
 import javax.inject.Inject;
 
-
 public class MainActivity extends ActionBarActivity {
     @Inject
     ClueInterface cif;
-    //intents need primatives. not a good way to pass around classes
-    //using Dagger instead, hopefully
-    //public final static String EXTRA_MESSAGE = "com.anomalycon.murdermysteryapp.MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         //Dagger things
         ContestApplication cApp = (ContestApplication) getApplication();
         cApp.getObjectGraph().inject(this);
 
-        setContentView(R.layout.activity_main);
-
+        //Adding new clues
         final Button newClueButton = (Button) findViewById(R.id.newClueButton);
         newClueButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 System.out.println("New Clue Button Click"); //test
                 Toast.makeText(getApplicationContext(), "New Clue Button Click", Toast.LENGTH_LONG).show(); //test
                 Intent intent = new Intent(v.getContext(), NewClueActivity.class);
-                //intent.putExtra(EXTRA_MESSAGE, message);
                 startActivity(intent);
             }
         });
 
+        //Viewing all clues
         final Button viewClueButton = (Button) findViewById(R.id.viewClueButton);
         viewClueButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -50,17 +46,13 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        //Making a guess
         final Button guessButton = (Button) findViewById(R.id.guessButton);
         guessButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 System.out.println("Guess Button Click"); //test
 
-                if(cif == null){
-                    //Add some better error handling here.
-                    Toast.makeText(getApplicationContext(), "Still broken", Toast.LENGTH_LONG).show();
-
-                }
-                else if(cif.countFoundClues()/cif.countAllClues() < 0.8)
+                if(cif.countFoundClues()/cif.countAllClues() < 0.8)
                 {
                     Toast.makeText(getApplicationContext(), "Not enough clues. Keep hunting!", Toast.LENGTH_LONG).show();
                     System.out.println(Integer.toString(cif.countFoundClues())+" "+Integer.toString(cif.countAllClues()));

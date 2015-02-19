@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Murder Mystery Contest</string>
-    <string name="welcome">Welcome to the official Anomaly Con Murder Mystery App!</string>
+    <string name="welcome">"Welcome to the official AnomalyCon \n Murder Mystery App!"</string>
     <string name="newClue">Enter new clue</string>
     <string name="viewClue">View all clues</string>
     <string name="guess">Who did it?</string>

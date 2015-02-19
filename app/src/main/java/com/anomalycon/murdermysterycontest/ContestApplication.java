@@ -1,3 +1,5 @@
+/* Created this class primarily to enable the use of Dagger */
+
 package com.anomalycon.murdermysterycontest;
 
 import android.app.Application;
@@ -24,12 +26,12 @@ public class ContestApplication extends Application {
         sInstance = this;
         sInstance.initializeInstance();
 
+        //Don't start activities from inside Application classes.
         //Intent intent = new Intent(this, MainActivity.class);
         //startActivity(intent);
     }
 
     protected void initializeInstance() {
-        // do all your initialization here
         //Dagger things
         Object[] modules = getModules().toArray();
         objectGraph = ObjectGraph.create(modules);

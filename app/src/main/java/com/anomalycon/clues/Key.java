@@ -1,12 +1,12 @@
 package com.anomalycon.clues;
 
 /**
- * Created by verduranti on 2/10/15.
+ * Implementation of Key. No interface at the moment because Key is so simple.
  */
 public class Key {
 
     //Keys are all strings in this implementation
-    private static String keyword;
+    private String keyword;
 
     private Key() {
 
@@ -24,26 +24,20 @@ public class Key {
         return keyword;
     }
 
-    //unnecessary oops
-//    @Override
-//    public boolean equals(Object object) {
-//        boolean result = false;
-//        if (object == null || object.getClass() != getClass()) {
-//            result = false;
-//        } else {
-//            Key key = (Key) object;
-//            if (this.keyword == getKey()) {
-//                result = true;
-//            }
-//        }
-//        return result;
-//    }
-//
-//    @Override
-//    public int hashCode(Object object) {
-//        return 1;
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Key key = (Key) o;
 
+        if (!keyword.equals(key.keyword)) return false;
 
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return keyword.hashCode();
+    }
 }

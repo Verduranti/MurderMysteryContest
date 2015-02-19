@@ -10,6 +10,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
+//Dagger Stuff: If more classes/activities need access to Clues, add them here.
 @Module(
         injects = { MainActivity.class, NewClueActivity.class }
 )
@@ -25,14 +26,13 @@ public class ClueModule {
     }
 
     @Provides
-    //@InjectAndroidApplicationContext
     public Context provideApplicationContext() {
         return this.context;
     }
 
     @Provides
     @Singleton
-    public ClueInterface provideClueInterface(/*@InjectAndroidApplicationContext */Context context) {
+    public ClueInterface provideClueInterface(Context context) {
         return new ClueManager(context);
     }
 }

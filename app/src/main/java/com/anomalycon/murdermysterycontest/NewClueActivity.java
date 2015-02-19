@@ -33,10 +33,10 @@ public class NewClueActivity extends Activity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
-                    saveClue();
-                    System.out.println("Saving clue.."); //test
-                    Toast.makeText(getApplicationContext(), "Saving clue..", Toast.LENGTH_LONG).show(); //test
-                    handled = true;
+                    if(!checkIfEmptyPassword()) {
+                        saveClue();
+                        handled = true;
+                    }
                 }
                 return handled;
             }
@@ -44,18 +44,22 @@ public class NewClueActivity extends Activity {
 
     }
 
+    public boolean checkIfEmptyPassword() {
+        EditText editText = (EditText) findViewById(R.id.cluePassword);
+        String password = editText.getText().toString();
+        if(password.equals("")) {
+            editText.setError("Oops! Cannot be empty!");
+            return true;
+        }
+        return false;
+    }
+
     public void saveClue() {
         EditText editText = (EditText) findViewById(R.id.cluePassword);
         String password = editText.getText().toString();
         Key key = new Key(password);
-        if(cif == null) {
-            //Crappy error handling again
-            System.out.println("FAIL");
-        }
-        else {
-            cif.saveClue(key);
-        }
-
+        cif.saveClue(key);
+        Toast.makeText(getApplicationContext(), "Saving clue..", Toast.LENGTH_LONG).show();
     }
 
 

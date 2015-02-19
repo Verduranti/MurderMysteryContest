@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by verduranti on 2/10/15.
- *
  * Singleton Wrapper class designed to guard access to the user's discovered com.anomalycon.clues.
  */
 public class ClueManager implements ClueInterface {
@@ -72,13 +70,15 @@ public class ClueManager implements ClueInterface {
     public void saveClue(Key clueName) {
         if(foundClueMap.containsKey(clueName)) {
             //Already saved - error handling?
-            System.out.println("Shouldn't be here");
+            System.out.println("Clue already saved");
         }
         else if(allClueMap.containsKey(clueName)) {
             foundClueMap.put(clueName, allClueMap.get(clueName));
+            System.out.println("Clue Saved.");
         }
         else {
             //Some kind of error handling for bad clue names
+            System.out.println("Clue not found.");
         }
     }
 
