@@ -21,7 +21,9 @@
         android:imeOptions="actionSend"
         android:ems="10"
         android:hint="Password"
-        android:id="@+id/cluePassword" />
+        android:id="@+id/cluePassword">
+            <requestFocus />
 
+    </EditText>
 
 </LinearLayout>
