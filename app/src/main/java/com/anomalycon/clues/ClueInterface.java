@@ -10,9 +10,11 @@ package com.anomalycon.clues;
 
 public interface ClueInterface {
 
+
+
     public Clue getClue(Key clueName);
 
-    public void saveClue(Key clueName);
+    public SaveClueStatus saveClue(Key clueName);
 
     public int countFoundClues();
 

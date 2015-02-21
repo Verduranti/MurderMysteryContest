@@ -12,5 +12,8 @@
     <string name="saveClue">Save clue!</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="blankError">This field cannot be left blank</string>
+    <string name="badClueError">That is not the secret password</string>
+    <string name="duplicateClueError">You have already found this clue</string>
 
 </resources>

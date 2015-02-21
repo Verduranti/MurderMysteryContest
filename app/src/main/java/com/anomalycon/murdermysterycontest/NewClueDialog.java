@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -37,20 +38,23 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
                 .setPositiveButton(R.string.ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                // DO SOMETHING
+                                //((MainActivity)getActivity()).doPositiveClick();
+                                //if()
                             }
                         }
                 )
                 .setNegativeButton(R.string.cancel,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                // DO SOMETHING
+                                ((MainActivity)getActivity()).doNegativeClick();
                             }
                         }
                 )
                 .create();
 
         mEditText = (EditText) view.findViewById(R.id.cluePassword);
+
+        mEditText.setOnEditorActionListener(this);
 
         mEditText.requestFocus();
         dialog.getWindow().setSoftInputMode(
@@ -60,14 +64,68 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        AlertDialog dialog = (AlertDialog)getDialog();
+
+        Button positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View onClick) {
+               //Don't close damn you
+            }
+        });
+    }
+
+    @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if (EditorInfo.IME_ACTION_DONE == actionId) {
-            // Return input text to activity
-            NewClueDialogListener activity = (NewClueDialogListener) getActivity();
-            activity.onFinishEditDialog(mEditText.getText().toString());
+        if (EditorInfo.IME_ACTION_SEND == actionId) {
+            PasswordStatus status = saveClue(mEditText.getText().toString());
+            switch (status) {
+                case OK:
+                    this.dismiss();
+                    return true;
+                case BLANK:
+                    mEditText.setError(getResources().getString(R.string.blankError));
+                    return false;
+                case DUPLICATE:
+                    mEditText.setError(getResources().getString(R.string.duplicateClueError));
+                    return false;
+                default: // NOT_FOUND, ERROR
+                    mEditText.setError(getResources().getString(R.string.badClueError));
+                    return false;
+            }
+        }
+
+        else {
             this.dismiss();
             return true;
         }
-        return false;
+    }
+
+    private enum PasswordStatus {
+        BLANK, NOT_FOUND, OK, DUPLICATE, ERROR
+    }
+
+    public PasswordStatus saveClue(String password) {
+        if(password.equals("")) {
+            return PasswordStatus.BLANK;
+        }
+        else {
+            MainActivity activity = (MainActivity) getActivity();
+            switch (activity.saveClue(password))
+            {
+                case SAVED:
+                    return PasswordStatus.OK;
+                case DUPLICATE:
+                    return PasswordStatus.DUPLICATE;
+                case INVALID:
+                    return PasswordStatus.NOT_FOUND;
+                default:
+                    return PasswordStatus.ERROR; //Shouldn't be possible as written right now
+            }
+        }
     }
 }
+

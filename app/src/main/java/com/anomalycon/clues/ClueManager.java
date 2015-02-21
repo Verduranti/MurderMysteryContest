@@ -67,18 +67,18 @@ public class ClueManager implements ClueInterface {
     }
 
     @Override
-    public void saveClue(Key clueName) {
+    public SaveClueStatus saveClue(Key clueName) {
+        boolean returnStatus = false;
         if(foundClueMap.containsKey(clueName)) {
-            //Already saved - error handling?
-            System.out.println("Clue already saved");
+            return SaveClueStatus.DUPLICATE;
         }
         else if(allClueMap.containsKey(clueName)) {
             foundClueMap.put(clueName, allClueMap.get(clueName));
-            System.out.println("Clue Saved.");
+            return SaveClueStatus.SAVED;
         }
         else {
             //Some kind of error handling for bad clue names
-            System.out.println("Clue not found.");
+            return SaveClueStatus.INVALID;
         }
     }
 

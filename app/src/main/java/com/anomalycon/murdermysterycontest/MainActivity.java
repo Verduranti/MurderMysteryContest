@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.anomalycon.clues.Clue;
 import com.anomalycon.clues.ClueInterface;
 import com.anomalycon.clues.Key;
+import com.anomalycon.clues.SaveClueStatus;
 
 import javax.inject.Inject;
 
@@ -35,7 +37,6 @@ public class MainActivity extends ActionBarActivity {
         newClueButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 showNewClueDialog();
-
             }
         });
 
@@ -99,12 +100,21 @@ public class MainActivity extends ActionBarActivity {
         newClueDialog.show(fm, "activity_new_clue");
     }
 
-
-    public void saveClue(String password) {
-        Key key = new Key(password);
-        cif.saveClue(key);
+    public SaveClueStatus saveClue(String password) {
         Toast.makeText(getApplicationContext(), "Saving clue..", Toast.LENGTH_LONG).show();
+
+        Key key = new Key(password);
+        return cif.saveClue(key);
     }
 
+    public Clue lookupClue(String password) {
+        Key key = new Key(password);
+        return cif.getClue(key);
+    }
+
+    public void doNegativeClick() {
+        // Do stuff here.
+        //Log.i("FragmentAlertDialog", "Negative click!");
+    }
 
 }
