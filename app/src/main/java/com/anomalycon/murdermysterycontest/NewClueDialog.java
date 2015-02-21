@@ -38,15 +38,14 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
                 .setPositiveButton(R.string.ok,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                //((MainActivity)getActivity()).doPositiveClick();
-                                //if()
+                                //Should probably clean this up
                             }
                         }
                 )
                 .setNegativeButton(R.string.cancel,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                ((MainActivity)getActivity()).doNegativeClick();
+                                //((MainActivity)getActivity()).doNegativeClick();
                             }
                         }
                 )
@@ -67,13 +66,29 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
     public void onResume() {
         super.onResume();
 
-        AlertDialog dialog = (AlertDialog)getDialog();
+        final AlertDialog dialog = (AlertDialog)getDialog();
 
         Button positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View onClick) {
-               //Don't close damn you
+                PasswordStatus status = saveClue(mEditText.getText().toString());
+                switch (status) {
+                    case OK:
+                        dialog.dismiss();
+                        //add intent to open up extra content
+                        return;
+                    case BLANK:
+                        mEditText.setError(getResources().getString(R.string.blankError));
+                        break;
+                    case DUPLICATE:
+                        mEditText.setError(getResources().getString(R.string.duplicateClueError));
+                        break;
+                    default: // NOT_FOUND, ERROR
+                        mEditText.setError(getResources().getString(R.string.badClueError));
+                        break;
+                }
+                return;
             }
         });
     }
@@ -85,22 +100,24 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
             switch (status) {
                 case OK:
                     this.dismiss();
-                    return true;
+                    //Add intent to open up extra content
+                    break;
                 case BLANK:
                     mEditText.setError(getResources().getString(R.string.blankError));
-                    return false;
+                    break;
                 case DUPLICATE:
                     mEditText.setError(getResources().getString(R.string.duplicateClueError));
-                    return false;
+                    break;
                 default: // NOT_FOUND, ERROR
                     mEditText.setError(getResources().getString(R.string.badClueError));
-                    return false;
+                    break;
             }
+            return true;
         }
 
         else {
             this.dismiss();
-            return true;
+            return false;
         }
     }
 
