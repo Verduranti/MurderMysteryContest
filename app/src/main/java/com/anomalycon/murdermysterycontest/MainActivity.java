@@ -1,24 +1,25 @@
 package com.anomalycon.murdermysterycontest;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.anomalycon.clues.ClueInterface;
+import com.anomalycon.clues.Key;
 
 import javax.inject.Inject;
 
 public class MainActivity extends ActionBarActivity {
     @Inject
     ClueInterface cif;
+
+    final Context activityContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,37 +34,8 @@ public class MainActivity extends ActionBarActivity {
         final Button newClueButton = (Button) findViewById(R.id.newClueButton);
         newClueButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                showNewClueDialog();
 
-                // get prompts.xml view
-                LayoutInflater layoutInflater = LayoutInflater.from(getApplicationContext());
-                View promptView = layoutInflater.inflate(R.layout.activity_new_clue, null);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getApplicationContext());
-                // set prompts.xml to be the layout file of the alertdialog builder
-                alertDialogBuilder.setView(promptView);
-                final EditText input = (EditText) promptView.findViewById(R.id.cluePassword);
-
-                // setup a dialog window
-                alertDialogBuilder.setCancelable(false)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // get user input use it to save the clue
-                            }
-                        })
-                        .setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-
-                // create an alert dialog
-                AlertDialog alertD = alertDialogBuilder.create();
-
-                alertD.show();
-                System.out.println("New Clue Button Click"); //test
-                Toast.makeText(getApplicationContext(), "New Clue Button Click", Toast.LENGTH_LONG).show(); //test
-                //Intent intent = new Intent(v.getContext(), NewClueActivity.class);
-                //startActivity(intent);
             }
         });
 
@@ -77,6 +49,7 @@ public class MainActivity extends ActionBarActivity {
         });
 
         //Making a guess
+        //Window.
         final Button guessButton = (Button) findViewById(R.id.guessButton);
         guessButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -119,6 +92,19 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Functions for saving new clues:
+    public void showNewClueDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        NewClueDialog newClueDialog = new NewClueDialog();
+        newClueDialog.show(fm, "activity_new_clue");
+    }
+
+
+    public void saveClue(String password) {
+        Key key = new Key(password);
+        cif.saveClue(key);
+        Toast.makeText(getApplicationContext(), "Saving clue..", Toast.LENGTH_LONG).show();
+    }
 
 
 }
