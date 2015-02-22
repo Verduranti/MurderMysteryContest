@@ -96,7 +96,7 @@ public class MainActivity extends ActionBarActivity {
     public void showNewClueDialog() {
         FragmentManager fm = getSupportFragmentManager();
         NewClueDialog newClueDialog = new NewClueDialog();
-        newClueDialog.show(fm, "activity_new_clue");
+        newClueDialog.show(fm, "fragment_new_clue");
     }
 
     public SaveClueStatus saveClue(String password) {

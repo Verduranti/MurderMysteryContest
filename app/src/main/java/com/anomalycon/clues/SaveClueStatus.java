@@ -5,6 +5,7 @@ package com.anomalycon.clues;
  */
 public enum SaveClueStatus {
 
-        SAVED, DUPLICATE, INVALID
+    SAVED, DUPLICATE, INVALID, BLANK;
 
 }
+

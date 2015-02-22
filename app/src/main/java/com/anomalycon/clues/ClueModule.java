@@ -3,7 +3,6 @@ package com.anomalycon.clues;
 import android.content.Context;
 
 import com.anomalycon.murdermysterycontest.MainActivity;
-import com.anomalycon.murdermysterycontest.NewClueActivity;
 
 import javax.inject.Singleton;
 
@@ -12,7 +11,7 @@ import dagger.Provides;
 
 //Dagger Stuff: If more classes/activities need access to Clues, add them here.
 @Module(
-        injects = { MainActivity.class, NewClueActivity.class }
+        injects = { MainActivity.class }
 )
 public class ClueModule {
     //private Application application;

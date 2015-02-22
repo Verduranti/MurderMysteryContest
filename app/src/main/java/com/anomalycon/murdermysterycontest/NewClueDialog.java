@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.anomalycon.clues.SaveClueStatus;
+
 public class NewClueDialog extends DialogFragment implements OnEditorActionListener {
 
     private EditText mEditText;
@@ -31,7 +33,7 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
 
-        View view = inflater.inflate(R.layout.activity_new_clue, null);
+        View view = inflater.inflate(R.layout.fragment_new_clue, null);
 
         Dialog dialog = new AlertDialog.Builder(getActivity())
                 .setView(view)
@@ -72,22 +74,7 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View onClick) {
-                PasswordStatus status = saveClue(mEditText.getText().toString());
-                switch (status) {
-                    case OK:
-                        dialog.dismiss();
-                        //add intent to open up extra content
-                        return;
-                    case BLANK:
-                        mEditText.setError(getResources().getString(R.string.blankError));
-                        break;
-                    case DUPLICATE:
-                        mEditText.setError(getResources().getString(R.string.duplicateClueError));
-                        break;
-                    default: // NOT_FOUND, ERROR
-                        mEditText.setError(getResources().getString(R.string.badClueError));
-                        break;
-                }
+                saveClue(dialog);
                 return;
             }
         });
@@ -96,53 +83,43 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (EditorInfo.IME_ACTION_SEND == actionId) {
-            PasswordStatus status = saveClue(mEditText.getText().toString());
-            switch (status) {
-                case OK:
-                    this.dismiss();
-                    //Add intent to open up extra content
-                    break;
-                case BLANK:
-                    mEditText.setError(getResources().getString(R.string.blankError));
-                    break;
-                case DUPLICATE:
-                    mEditText.setError(getResources().getString(R.string.duplicateClueError));
-                    break;
-                default: // NOT_FOUND, ERROR
-                    mEditText.setError(getResources().getString(R.string.badClueError));
-                    break;
-            }
+            saveClue(this.getDialog());
             return true;
         }
-
         else {
             this.dismiss();
             return false;
         }
     }
 
-    private enum PasswordStatus {
-        BLANK, NOT_FOUND, OK, DUPLICATE, ERROR
-    }
-
-    public PasswordStatus saveClue(String password) {
+    private SaveClueStatus saveClue(String password) {
         if(password.equals("")) {
-            return PasswordStatus.BLANK;
+            return SaveClueStatus.BLANK;
         }
         else {
             MainActivity activity = (MainActivity) getActivity();
-            switch (activity.saveClue(password))
-            {
-                case SAVED:
-                    return PasswordStatus.OK;
-                case DUPLICATE:
-                    return PasswordStatus.DUPLICATE;
-                case INVALID:
-                    return PasswordStatus.NOT_FOUND;
-                default:
-                    return PasswordStatus.ERROR; //Shouldn't be possible as written right now
-            }
+            return activity.saveClue(password);
         }
+    }
+
+    private void saveClue(Dialog dialog) {
+        SaveClueStatus status = saveClue(mEditText.getText().toString());
+        switch (status) {
+            case SAVED:
+                dialog.dismiss();
+                //Add intent to open up extra content
+                break;
+            case BLANK:
+                mEditText.setError(getResources().getString(R.string.blankError));
+                break;
+            case DUPLICATE:
+                mEditText.setError(getResources().getString(R.string.duplicateClueError));
+                break;
+            default: // NOT_FOUND, ERROR
+                mEditText.setError(getResources().getString(R.string.badClueError));
+                break;
+        }
+        return;
     }
 }
 
