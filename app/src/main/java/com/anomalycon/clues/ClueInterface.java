@@ -8,9 +8,12 @@ package com.anomalycon.clues;
  * Later, when making a guess or viewing the collected clues that Key is used to pull up Clue info
  */
 
+import java.util.Set;
+
 public interface ClueInterface {
 
 
+    public Set<Key> getClueKeys();
 
     public Clue getClue(Key clueName);
 

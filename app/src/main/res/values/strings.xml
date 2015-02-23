@@ -15,5 +15,15 @@
     <string name="blankError">This field cannot be left blank</string>
     <string name="badClueError">That is not the secret password</string>
     <string name="duplicateClueError">You have already found this clue</string>
+    <string name="emailTo">To :</string>
+    <string name="defaultEmailAddress">glasswalkerdev@gmail.com</string>
+    <string name="emailSubject">Subject :</string>
+    <string name="defaultEmailSubject">The Murderer is ...</string>
+    <string name="emailMessage">Message :</string>
+    <string name="emailMessageHint">Please make your guess here.</string>
+    <string name="emailSendButton">Send</string>
+    <string name="emailAppWarning">You must have an email app installed. This will open in an outside email app.</string>
+    <string name="emailAppWarningTitle">Are you sure?</string>
+    <string name="allClueTitle">Discovered Clues</string>
 
 </resources>

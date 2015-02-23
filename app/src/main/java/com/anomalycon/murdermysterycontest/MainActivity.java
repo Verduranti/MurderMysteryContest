@@ -1,6 +1,7 @@
 package com.anomalycon.murdermysterycontest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
@@ -43,8 +44,8 @@ public class MainActivity extends ActionBarActivity {
         final Button viewClueButton = (Button) findViewById(R.id.viewClueButton);
         viewClueButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                System.out.println("View Clue Button Click"); //test
-                Toast.makeText(getApplicationContext(), "View Clue Button Click", Toast.LENGTH_LONG).show(); //test
+                Intent myIntent = new Intent(MainActivity.this, AllClueActivity.class);
+                MainActivity.this.startActivity(myIntent);
             }
         });
 
@@ -55,13 +56,16 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 System.out.println("Guess Button Click"); //test
 
-                if(cif.countFoundClues()/cif.countAllClues() < 0.8)
+                if(cif.countFoundClues()/cif.countAllClues() > 0.8) //switched to make testing easier
                 {
                     Toast.makeText(getApplicationContext(), "Not enough clues. Keep hunting!", Toast.LENGTH_LONG).show();
                     System.out.println(Integer.toString(cif.countFoundClues())+" "+Integer.toString(cif.countAllClues()));
                 }
                 else
                 {
+                    Intent myIntent = new Intent(MainActivity.this, SubmitGuessActivity.class);
+                    //myIntent.putExtra("key", value); //Optional parameters
+                    MainActivity.this.startActivity(myIntent);
                     //Replace this with form
                     Toast.makeText(getApplicationContext(), "You may guess now", Toast.LENGTH_LONG).show();
                 }

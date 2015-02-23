@@ -29,6 +29,15 @@
                 android:value=".NewClueActivity" />
         </activity>
 
+        <activity
+            android:name=".SubmitGuessActivity"
+            android:label="@string/guess"
+            android:parentActivityName="com.anomalycon.murdermysterycontest.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".SubmitGuessActivity" />
+        </activity>
+
     </application>
 
 </manifest>

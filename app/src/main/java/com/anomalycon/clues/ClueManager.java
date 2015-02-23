@@ -7,6 +7,7 @@ import com.anomalycon.murdermysterycontest.R;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Singleton Wrapper class designed to guard access to the user's discovered com.anomalycon.clues.
@@ -51,6 +52,11 @@ public class ClueManager implements ClueInterface {
             Key newKey = new Key(nameValuePair[0]);
             allClueMap.put(newKey, newClue);
         }
+    }
+
+    @Override
+    public Set<Key> getClueKeys() {
+        return foundClueMap.keySet();
     }
 
     @Override
