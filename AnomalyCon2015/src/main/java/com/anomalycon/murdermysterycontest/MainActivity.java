@@ -56,7 +56,8 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 System.out.println("Guess Button Click"); //test
 
-                if(cif.countFoundClues()/cif.countAllClues() > 0.8) //switched to make testing easier
+                //This fraction sucks. Need 6/10? BAH. Might clean this up.
+                if(cif.countFoundClues()/((float)cif.countAllClues()) <= 0.5) //not switched to make testing easier
                 {
                     Toast.makeText(getApplicationContext(), "Not enough clues. Keep hunting!", Toast.LENGTH_LONG).show();
                     System.out.println(Integer.toString(cif.countFoundClues())+" "+Integer.toString(cif.countAllClues()));

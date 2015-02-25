@@ -5,9 +5,11 @@ import android.content.res.Resources;
 
 import com.anomalycon.murdermysterycontest.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Singleton Wrapper class designed to guard access to the user's discovered com.anomalycon.clues.
@@ -55,8 +57,15 @@ public class ClueManager implements ClueInterface {
     }
 
     @Override
-    public Set<Key> getClueKeys() {
-        return foundClueMap.keySet();
+    public List<String> getClueNames() {
+        List<Key> list = Arrays.asList(foundClueMap.keySet().toArray(new Key[foundClueMap.size()]));
+
+        List<String> nameList = new ArrayList<>();
+        for(Key key : list)
+        {
+            nameList.add(key.getKey());
+        }
+        return nameList;
     }
 
     @Override

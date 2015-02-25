@@ -1,10 +1,10 @@
 package com.anomalycon.murdermysterycontest;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +15,7 @@ import android.widget.TextView;
  * Currently just uses a built in Email app. I'll clean that up later.
  * Created by verduranti on 2/22/15.
  */
-public class SubmitGuessActivity extends Activity {
+public class SubmitGuessActivity extends ActionBarActivity {
 
     Button buttonSend;
     TextView textTo;
