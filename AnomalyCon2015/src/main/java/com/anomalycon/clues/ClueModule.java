@@ -33,6 +33,7 @@ public class ClueModule {
     @Provides
     @Singleton
     public ClueInterface provideClueInterface(Context context) {
-        return new ClueManager(context);
+        //return new ClueManager(context);
+        return new RestClueManager(context);
     }
 }

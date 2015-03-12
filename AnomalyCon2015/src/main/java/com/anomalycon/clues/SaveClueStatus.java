@@ -5,7 +5,16 @@ package com.anomalycon.clues;
  */
 public enum SaveClueStatus {
 
-    SAVED, DUPLICATE, INVALID, BLANK;
+    SAVED(true), DUPLICATE(true), INVALID(false), BLANK(false);
 
+    boolean haveClue;
+
+    SaveClueStatus(boolean haveClue) {
+        this.haveClue = haveClue;
+    }
+
+    public boolean hasClue() {
+        return haveClue;
+    }
 }
 

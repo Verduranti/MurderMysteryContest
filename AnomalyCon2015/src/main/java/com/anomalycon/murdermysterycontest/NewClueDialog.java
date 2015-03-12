@@ -3,6 +3,7 @@ package com.anomalycon.murdermysterycontest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
@@ -75,7 +76,6 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
             @Override
             public void onClick(View onClick) {
                 saveClue(dialog);
-                return;
             }
         });
     }
@@ -83,7 +83,7 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (EditorInfo.IME_ACTION_SEND == actionId) {
-            saveClue(this.getDialog());
+            saveClue(getDialog());
             return true;
         }
         else {
@@ -102,24 +102,28 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
         }
     }
 
-    private void saveClue(Dialog dialog) {
-        SaveClueStatus status = saveClue(mEditText.getText().toString());
-        switch (status) {
-            case SAVED:
-                dialog.dismiss();
-                //Add intent to open up extra content
-                break;
-            case BLANK:
-                mEditText.setError(getResources().getString(R.string.blankError));
-                break;
-            case DUPLICATE:
-                mEditText.setError(getResources().getString(R.string.duplicateClueError));
-                break;
-            default: // NOT_FOUND, ERROR
-                mEditText.setError(getResources().getString(R.string.badClueError));
-                break;
-        }
-        return;
+    private void saveClue(final Dialog dialog) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                SaveClueStatus status = saveClue(mEditText.getText().toString());
+                switch (status) {
+                    case SAVED:
+                        dialog.dismiss();
+                        //Add intent to open up extra content
+                        break;
+                    case BLANK:
+                        mEditText.setError(getResources().getString(R.string.blankError));
+                        break;
+                    case DUPLICATE:
+                        mEditText.setError(getResources().getString(R.string.duplicateClueError));
+                        break;
+                    default: // NOT_FOUND, ERROR
+                        mEditText.setError(getResources().getString(R.string.badClueError));
+                        break;
+                }
+            }
+        });
     }
 }
 

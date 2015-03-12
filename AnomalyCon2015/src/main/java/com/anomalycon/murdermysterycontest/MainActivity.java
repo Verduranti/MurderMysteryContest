@@ -108,6 +108,7 @@ public class MainActivity extends ActionBarActivity {
         Key key = new Key(password);
         SaveClueStatus status = cif.saveClue(key);
         if(status == SaveClueStatus.SAVED)
+            // This is erroring out cause this is called from an async task?
             Toast.makeText(getApplicationContext(), "Clue saved.", Toast.LENGTH_LONG).show();
         return status;
     }

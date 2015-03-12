@@ -3,6 +3,7 @@
     package="com.anomalycon.murdermysterycontest" >
 
     <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".ContestApplication"
