@@ -2,6 +2,7 @@ package com.anomalycon.murdermysterycontest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
@@ -17,10 +18,7 @@ import com.anomalycon.clues.SaveClueStatus;
 
 import javax.inject.Inject;
 
-public class MainActivity extends ActionBarActivity {
-    @Inject
-    ClueInterface cif;
-
+public class MainActivity extends AnomalyBaseActivity {
     final Context activityContext = this;
 
     @Override
@@ -49,30 +47,36 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        //Making a guess
-        //Window.
+        //Making a guess window.
         final Button guessButton = (Button) findViewById(R.id.guessButton);
         guessButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 System.out.println("Guess Button Click"); //test
-
-                //This fraction sucks. Need 6/10? BAH. Might clean this up.
-                if(cif.countFoundClues()/((float)cif.countAllClues()) <= 0.5) //not switched to make testing easier
-                {
-                    Toast.makeText(getApplicationContext(), "Not enough clues. Keep hunting!", Toast.LENGTH_LONG).show();
-                    System.out.println(Integer.toString(cif.countFoundClues())+" "+Integer.toString(cif.countAllClues()));
-                }
-                else
-                {
-                    Intent myIntent = new Intent(MainActivity.this, SubmitGuessActivity.class);
-                    //myIntent.putExtra("key", value); //Optional parameters
-                    MainActivity.this.startActivity(myIntent);
-                    //Replace this with form
-                    Toast.makeText(getApplicationContext(), "You may guess now", Toast.LENGTH_LONG).show();
-                }
+                openGuessActivity();
             }
         });
 
+    }
+
+    private void openGuessActivity() {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                //This fraction sucks. Need 6/10? BAH. Might clean this up.
+                System.out.println(cif.countFoundClues() + " / " + cif.countAllClues());
+                //if (cif.countFoundClues() / ((float) cif.countAllClues()) <= 0.5)
+                if (cif.countFoundClues() == 0) // TODO: to make testing easier remove in favor of the above
+                {
+                    toast(R.string.notEnoughClues);
+                } else {
+                    Intent myIntent = new Intent(MainActivity.this, SubmitGuessActivity.class);
+                    //myIntent.putExtra("key", value); //Optional parameters
+                    startActivity(myIntent);
+                    //Replace this with form
+                    toast(R.string.makeYourGuess);
+                }
+            }
+        });
     }
 
     @Override
@@ -107,9 +111,6 @@ public class MainActivity extends ActionBarActivity {
     public SaveClueStatus saveClue(String password) {
         Key key = new Key(password);
         SaveClueStatus status = cif.saveClue(key);
-        if(status == SaveClueStatus.SAVED)
-            // This is erroring out cause this is called from an async task?
-            Toast.makeText(getApplicationContext(), "Clue saved.", Toast.LENGTH_LONG).show();
         return status;
     }
 

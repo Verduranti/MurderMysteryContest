@@ -6,3 +6,5 @@
 /build
 
 *.jar
+
+.idea/codeStyleSettings.xml

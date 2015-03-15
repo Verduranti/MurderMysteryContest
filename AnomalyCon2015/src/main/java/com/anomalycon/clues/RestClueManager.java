@@ -1,11 +1,13 @@
 package com.anomalycon.clues;
 
 import android.content.Context;
-import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 
-import com.anomalycon.murdermysterycontest.R;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
+import com.google.common.io.Files;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -14,16 +16,15 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,26 +35,56 @@ import java.util.Map;
 public class RestClueManager implements ClueInterface {
 
     //private static ClueManager myInstance = null;
+    private static final String CLUE_FILE = "clueArchive.txt";
 
-    private Map<Key, Clue> foundClueMap;
+    private static final TypeReference<Map<String,Clue>> CLUE_MAP_TYPE = new TypeReference<Map<String,Clue>>() { };
+    private static final TypeReference<Clue> CLUE_TYPE = new TypeReference<Clue>() { };
+
+    private final Map<String, Clue> foundClueMap;
+    private final File clueFile;
 
     //private static Context myContext;
 
-    private RestClueManager() {
-        //not used
+    private Map<String, Clue> loadSavedClues() {
+        try {
+            final String contents = Files.toString(clueFile, Charset.defaultCharset());
+
+            return parseJson(contents, CLUE_MAP_TYPE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new HashMap<>();
+    }
+
+    private void saveClues() {
+        final String string = toJson(foundClueMap).toString();
+
+        System.out.println(string);
+
+        try {
+            Files.write(string, clueFile, Charset.defaultCharset());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public RestClueManager(Context context) {
-        foundClueMap = new HashMap<>();
+        clueFile = new File(context.getFilesDir(), CLUE_FILE);
+        foundClueMap = loadSavedClues();
     }
 
     // this helper method can be used to make JSON parsing a one-line operation
-    public static <T> T parseJson(String json, Class<T> clazz) {
+    public static <T> T parseJson(String json, TypeReference<T> clazz) {
         try {
-            return defaultMapper().treeToValue(defaultMapper().readTree(json), clazz);
+            return defaultMapper().readValue(json, clazz);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    // this helper method can be used to make JSON parsing a one-line operation
+    public static <T> JsonNode toJson(T object) {
+        return defaultMapper().valueToTree(object);
     }
 
     // re-use a single ObjectMapper so we're not creating multiple object mappers
@@ -67,7 +98,7 @@ public class RestClueManager implements ClueInterface {
      *
      * @return the clue count
      */
-    private ClueCount getClue() {
+    private ClueCount getClueCount() {
         final HttpClient httpClient = new DefaultHttpClient();
         final HttpContext localContext = new BasicHttpContext(); // Daggerify these?
         final HttpGet get = new HttpGet("http://anomalycon-server.heroku.com/clue");
@@ -79,12 +110,12 @@ public class RestClueManager implements ClueInterface {
             if (entity != null) {
                 final String retSrc = EntityUtils.toString(entity);
 
-                return parseJson(retSrc, ClueCount.class);
+                return parseJson(retSrc, new TypeReference<ClueCount>(){});
             }
+            return null;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     /**
@@ -117,78 +148,94 @@ public class RestClueManager implements ClueInterface {
             if (entity != null) {
                 final String retSrc = EntityUtils.toString(entity);
 
-                return parseJson(retSrc, Clue.class);
+                return parseJson(retSrc, CLUE_TYPE);
             }
+            return null;
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return null;
+    }
+
+    private Drawable getFormulaImage(String password) {
+        try {
+            final URL url = new URL("http://anomalycon-server.herokuapp.com/img/"+password);
+            return Drawable.createFromStream(url.openStream(), "src");
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
      * Method that performs RESTful webservice invocations
      *
-     * @param password the password to check
+     * @param guess the guess to check
      * @return the clue for the password or null
      */
-    private Clue postGuess(String password) {
+    private GuessStatus postGuess(Guess guess) {
         final HttpClient httpClient = new DefaultHttpClient();
         final HttpContext localContext = new BasicHttpContext(); // Daggerify these?
-        final HttpPost post = new HttpPost("http://anomalycon-server.heroku.com/clue");
         try {
+            final JsonNode json = toJson(guess);
+            final StringEntity se = new StringEntity(json.toString());
+            se.setContentType("application/json");
+
+            final HttpPost post = new HttpPost("http://anomalycon-server.heroku.com/guess");
+            post.setEntity(se);
+
             final HttpResponse response = httpClient.execute(post, localContext);
 
-            final HttpEntity entity = response.getEntity();
-
-            if (entity != null) {
-                final String retSrc = EntityUtils.toString(entity);
-
-                return parseJson(retSrc, Clue.class);
+            if(response.getStatusLine().getStatusCode() == 200) {
+                return GuessStatus.SUBMITTED;
             }
+            System.out.println("Guess rejected: "+response.getStatusLine().toString());
+            return GuessStatus.REJECTED;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     @Override
     public List<String> getClueNames() {
-        List<Key> list = Arrays.asList(foundClueMap.keySet().toArray(new Key[foundClueMap.size()]));
-
-        List<String> nameList = new ArrayList<>();
-        for(Key key : list)
-        {
-            nameList.add(key.getKey());
-        }
-        return nameList;
+        return Lists.newArrayList(foundClueMap.keySet());
     }
 
     @Override
     public Clue getClue(Key clueName) {
         if(saveClue(clueName).hasClue())
         {
-            return foundClueMap.get(clueName);
+            return foundClueMap.get(clueName.getKey());
         }
         return null;
     }
 
+    private void addClueToFoundMap(Clue clue) {
+        foundClueMap.put(clue.getName(), clue);
+        saveClues();
+    }
+
     @Override
     public SaveClueStatus saveClue(Key clueName) {
-        boolean returnStatus = false;
-        if(foundClueMap.containsKey(clueName)) {
+        if(foundClueMap.containsKey(clueName.getKey())) {
             return SaveClueStatus.DUPLICATE;
         }
         try {
             Clue clue = postClue(clueName.getKey());
-            foundClueMap.put(new Key(clue.getName()), clue);
+            addClueToFoundMap(clue);
             return SaveClueStatus.SAVED;
         }
         catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             return SaveClueStatus.INVALID;
         }
+    }
+
+    @Override
+    public Drawable getImageForClue(Key clueName) {
+        return getFormulaImage(clueName.getKey());
     }
 
     @Override
@@ -199,10 +246,21 @@ public class RestClueManager implements ClueInterface {
     @Override
     public int countAllClues() {
         try {
-            return getClue().getCount();
+            return getClueCount().getCount();
         }
         catch (Exception e) {
+            e.printStackTrace();
             return Integer.MAX_VALUE;
+        }
+    }
+
+    @Override
+    public GuessStatus makeGuess(Guess guess) {
+        guess.setClues(foundClueMap.values());
+        try {
+            return postGuess(guess);
+        } catch (Exception e) {
+            return GuessStatus.ERROR;
         }
     }
 

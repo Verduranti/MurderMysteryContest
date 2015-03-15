@@ -1,5 +1,7 @@
 package com.anomalycon.clues;
 
+import android.graphics.drawable.Drawable;
+
 import java.util.List;
 
 /**
@@ -32,8 +34,12 @@ public interface ClueInterface {
      */
     public SaveClueStatus saveClue(Key clueName);
 
+    Drawable getImageForClue(Key clueName);
+
     public int countFoundClues();
 
     public int countAllClues();
+
+    public GuessStatus makeGuess(Guess guess);
 
 }

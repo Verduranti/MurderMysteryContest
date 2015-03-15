@@ -7,23 +7,29 @@
     <string name="viewClue">View all clues</string>
     <string name="guess">Who did it?</string>
     <string name="action_settings">Settings</string>
-    <string name="email">angelofchaos@gmail.com</string>
     <string name="password">Enter the secret password</string>
     <string name="saveClue">Save clue!</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="clueSaved">Clue Saved!</string>
     <string name="blankError">This field cannot be left blank</string>
     <string name="badClueError">That is not the secret password</string>
     <string name="duplicateClueError">You have already found this clue</string>
-    <string name="emailTo">To :</string>
-    <string name="defaultEmailAddress">glasswalkerdev@gmail.com</string>
-    <string name="emailSubject">Subject :</string>
-    <string name="defaultEmailSubject">The Murderer is ...</string>
-    <string name="emailMessage">Message :</string>
-    <string name="emailMessageHint">Please make your guess here.</string>
-    <string name="emailSendButton">Send</string>
-    <string name="emailAppWarning">You must have an email app installed. This will open in an outside email app.</string>
-    <string name="emailAppWarningTitle">Are you sure?</string>
+    <string name="notEnoughClues">Not enough clues. Keep hunting!</string>
+    <string name="makeYourGuess">Please make your guess!</string>
+    <string name="fromEmailPrompt">My Email Address:</string>
+    <string name="fromNamePrompt">My Name:</string>
+    <string name="guessMurderer">The Culprit is: </string>
+    <string name="guessWeapon">The Weapon was: </string>
+    <string name="guessFormulae">The Formulae are: </string>
+    <string name="guessFormulaeHint">ELEMENT:Parts, ...</string>
+    <string name="sendGuessButton">Send</string>
+    <string name="guessSuccess">Guess Submitted Successfully!</string>
+    <string name="guessRejected">Guess Rejected!</string>
+    <string name="guessFailed">Aether Delivery Failed. Try Again!</string>
     <string name="allClueTitle">Discovered Clues</string>
+    <string name="title_activity_clue_detail">ClueDetailActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

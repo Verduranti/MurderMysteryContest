@@ -7,53 +7,77 @@
     style="@style/LayoutTheme">
 
     <TextView
-        android:id="@+id/textViewPhoneNo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/emailTo"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/editTextTo"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/defaultEmailAddress" />
-
-    <TextView
-        android:id="@+id/textViewSubject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/emailSubject"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/editTextSubject"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/defaultEmailSubject"/>
-
-    <TextView
-        android:id="@+id/textViewMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/emailMessage"
+        android:id="@+id/textViewName"
+        style="@style/InputLabel"
+        android:text="@string/fromNamePrompt"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/editTextMessage"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="top"
-        android:inputType="textMultiLine"
-        android:lines="2"
-        android:hint="@string/emailMessageHint">
-            <requestFocus />
-        </EditText>
+        android:id="@+id/editTextName"
+        android:inputType="textPersonName"
+        android:maxLines="1"
+        android:imeOptions="actionNext"
+        style="@style/InputText">
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textViewEmail"
+        style="@style/InputLabel"
+        android:text="@string/fromEmailPrompt"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:imeOptions="actionNext"
+        style="@style/InputText"/>
+
+    <TextView
+        android:id="@+id/textViewMurderer"
+        style="@style/InputLabel"
+        android:text="@string/guessMurderer"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/editTextGuessMurderer"
+        android:inputType="textPersonName"
+        android:maxLines="1"
+        android:imeOptions="actionNext"
+        style="@style/InputText" />
+
+    <TextView
+        android:id="@+id/textViewWeapon"
+        style="@style/InputLabel"
+        android:text="@string/guessWeapon"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/editTextGuessWeapon"
+        android:maxLines="1"
+        android:imeOptions="actionNext"
+        style="@style/InputText"/>
+
+    <TextView
+        android:id="@+id/textViewFormulae"
+        style="@style/InputLabel"
+        android:text="@string/guessFormulae"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/editTextGuessFormulae"
+        android:lines="1"
+        android:maxLines="6"
+        style="@style/InputText"
+        android:imeOptions="actionSend"
+        android:hint="@string/guessFormulaeHint" />
 
     <Button
+        style="@style/Buttons"
         android:id="@+id/buttonSend"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/emailSendButton" />
+        android:text="@string/sendGuessButton"/>
 
 </LinearLayout>

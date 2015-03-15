@@ -3,6 +3,7 @@
     package="com.anomalycon.murdermysterycontest" >
 
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -20,34 +21,38 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".NewClueActivity"
             android:label="@string/newClue"
-            android:parentActivityName="com.anomalycon.murdermysterycontest.MainActivity" >
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".NewClueActivity" />
         </activity>
-
         <activity
             android:name=".SubmitGuessActivity"
             android:label="@string/guess"
-            android:parentActivityName="com.anomalycon.murdermysterycontest.MainActivity" >
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SubmitGuessActivity" />
         </activity>
-
         <activity
             android:name=".AllClueActivity"
             android:label="@string/allClueTitle"
-            android:parentActivityName="com.anomalycon.murdermysterycontest.MainActivity" >
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".SubmitGuessActivity" />
         </activity>
-
+        <activity
+            android:name=".ClueDetailActivity"
+            android:label="@string/title_activity_clue_detail"
+            android:parentActivityName=".AllClueActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.anomalycon.murdermysterycontest.AllClueActivity" />
+        </activity>
     </application>
 
 </manifest>
