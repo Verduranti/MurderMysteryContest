@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -59,21 +61,35 @@ public class SubmitGuessActivity extends AnomalyBaseActivity {
         textGuessFormulae = (EditText) findViewById(R.id.editTextGuessFormulae);
 
         buttonSend.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        String name = textName.getText().toString();
-                        String email = textEmail.getText().toString();
-                        String guess = "Murderer:"+textGuessMurderer.getText().toString()+
-                                     "\nWeapon:"+textGuessWeapon.getText().toString()+
-                                     "\nFormulae:"+textGuessFormulae.getText().toString();
+                submitGuess();
+            }
+        });
 
-                        submitGuess(new Guess(name, email, guess));
-                    }
-                });
+        textGuessFormulae.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    submitGuess();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void submitGuess() {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                String name = textName.getText().toString();
+                String email = textEmail.getText().toString();
+                String guess = "Murderer:" + textGuessMurderer.getText().toString() +
+                             "\nWeapon:" + textGuessWeapon.getText().toString() +
+                             "\nFormulae:" + textGuessFormulae.getText().toString();
+
+                submitGuess(new Guess(name, email, guess));
             }
         });
     }

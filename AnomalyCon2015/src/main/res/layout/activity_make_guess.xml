@@ -15,9 +15,8 @@
     <EditText
         android:id="@+id/editTextName"
         android:inputType="textPersonName"
-        android:maxLines="1"
         android:imeOptions="actionNext"
-        style="@style/InputText">
+        style="@style/InputText" >
         <requestFocus />
     </EditText>
 
@@ -30,9 +29,8 @@
     <EditText
         android:id="@+id/editTextEmail"
         android:inputType="textEmailAddress"
-        android:maxLines="1"
         android:imeOptions="actionNext"
-        style="@style/InputText"/>
+        style="@style/InputText" />
 
     <TextView
         android:id="@+id/textViewMurderer"
@@ -43,7 +41,6 @@
     <EditText
         android:id="@+id/editTextGuessMurderer"
         android:inputType="textPersonName"
-        android:maxLines="1"
         android:imeOptions="actionNext"
         style="@style/InputText" />
 
@@ -55,7 +52,7 @@
 
     <EditText
         android:id="@+id/editTextGuessWeapon"
-        android:maxLines="1"
+        android:inputType="text"
         android:imeOptions="actionNext"
         style="@style/InputText"/>
 
@@ -67,6 +64,7 @@
 
     <EditText
         android:id="@+id/editTextGuessFormulae"
+        android:inputType="text"
         android:lines="1"
         android:maxLines="6"
         style="@style/InputText"
@@ -78,6 +76,7 @@
         android:id="@+id/buttonSend"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sendGuessButton"/>
+        android:text="@string/sendGuessButton"
+        android:clickable="true" />
 
 </LinearLayout>
