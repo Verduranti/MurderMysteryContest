@@ -1,5 +1,6 @@
 package com.anomalycon.murdermysterycontest;
 
+import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.Toast;
 
@@ -13,6 +14,15 @@ import javax.inject.Inject;
 public abstract class AnomalyBaseActivity extends ActionBarActivity {
     @Inject
     protected ClueInterface cif;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //Dagger things
+        ContestApplication cApp = (ContestApplication) getApplication();
+        cApp.getObjectGraph().inject(this);
+    }
 
     protected void toast(final int stringId) {
         runOnUiThread(new Runnable() {

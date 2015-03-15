@@ -38,6 +38,7 @@ public class RestClueManager implements ClueInterface {
     private static final String CLUE_FILE = "clueArchive.txt";
 
     private static final TypeReference<Map<String,Clue>> CLUE_MAP_TYPE = new TypeReference<Map<String,Clue>>() { };
+    private static final TypeReference<ClueCount> CLUE_COUNT_TYPE = new TypeReference<ClueCount>() { };
     private static final TypeReference<Clue> CLUE_TYPE = new TypeReference<Clue>() { };
 
     private final Map<String, Clue> foundClueMap;
@@ -110,7 +111,7 @@ public class RestClueManager implements ClueInterface {
             if (entity != null) {
                 final String retSrc = EntityUtils.toString(entity);
 
-                return parseJson(retSrc, new TypeReference<ClueCount>(){});
+                return parseJson(retSrc, CLUE_COUNT_TYPE);
             }
             return null;
         } catch (Exception e) {
@@ -188,7 +189,7 @@ public class RestClueManager implements ClueInterface {
 
             final HttpResponse response = httpClient.execute(post, localContext);
 
-            if(response.getStatusLine().getStatusCode() == 200) {
+            if(response.getStatusLine().getStatusCode() == 201) {
                 return GuessStatus.SUBMITTED;
             }
             System.out.println("Guess rejected: "+response.getStatusLine().toString());

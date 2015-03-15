@@ -26,10 +26,6 @@ public class MainActivity extends AnomalyBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Dagger things
-        ContestApplication cApp = (ContestApplication) getApplication();
-        cApp.getObjectGraph().inject(this);
-
         //Adding new clues
         final Button newClueButton = (Button) findViewById(R.id.newClueButton);
         newClueButton.setOnClickListener(new View.OnClickListener() {
