@@ -105,8 +105,8 @@ public class MainActivity extends AnomalyBaseActivity {
     }
 
     public SaveClueStatus saveClue(String password) {
-        Key key = new Key(password);
-        SaveClueStatus status = cif.saveClue(key);
+        final Key key = new Key(password);
+        final SaveClueStatus status = cif.saveClue(key);
         return status;
     }
 

@@ -22,14 +22,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NewClueActivity"
-            android:label="@string/newClue"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".NewClueActivity" />
-        </activity>
-        <activity
             android:name=".SubmitGuessActivity"
             android:label="@string/guess"
             android:parentActivityName=".MainActivity" >
@@ -51,7 +43,7 @@
             android:parentActivityName=".AllClueActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.anomalycon.murdermysterycontest.AllClueActivity" />
+                android:value=".AllClueActivity" />
         </activity>
     </application>
 

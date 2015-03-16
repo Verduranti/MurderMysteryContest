@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 import com.anomalycon.murdermysterycontest.R;
+import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,10 +60,8 @@ public class ClueManager implements ClueInterface {
 
     @Override
     public List<String> getClueNames() {
-        List<Key> list = Arrays.asList(foundClueMap.keySet().toArray(new Key[foundClueMap.size()]));
-
         List<String> nameList = new ArrayList<>();
-        for(Key key : list)
+        for(Key key : foundClueMap.keySet())
         {
             nameList.add(key.getKey());
         }
@@ -95,6 +94,17 @@ public class ClueManager implements ClueInterface {
             //Some kind of error handling for bad clue names
             return SaveClueStatus.INVALID;
         }
+    }
+
+    @Override
+    public SaveClueStatus saveClue(Clue clue) {
+        Key key = new Key(clue.getName());
+        if(!foundClueMap.containsKey(key)) {
+            return SaveClueStatus.INVALID;
+        }
+        foundClueMap.put(key, clue);
+
+        return SaveClueStatus.SAVED;
     }
 
     @Override

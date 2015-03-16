@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import com.anomalycon.clues.Clue;
 import com.anomalycon.clues.SaveClueStatus;
 
 public class NewClueDialog extends DialogFragment implements OnEditorActionListener {
@@ -105,6 +107,8 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
     }
 
     private void setStatus(final SaveClueStatus status, Dialog dialog) {
+        final Intent intent = new Intent(getActivity(), ClueDetailActivity.class);
+        intent.putExtra(Clue.CLUE_NAME_BUNDLE_ID, mEditText.getText().toString());
         if(status.hasClue()) {
             dialog.dismiss();
         }
@@ -114,6 +118,7 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
             public void run() {
                 if(status.hasClue()) {
                     Toast.makeText(applicationContext, text, Toast.LENGTH_LONG).show();
+                    getActivity().startActivity(intent);
                 }
                 else {
                     mEditText.setError(text);

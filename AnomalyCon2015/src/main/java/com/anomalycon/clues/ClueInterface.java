@@ -34,6 +34,8 @@ public interface ClueInterface {
      */
     public SaveClueStatus saveClue(Key clueName);
 
+    SaveClueStatus saveClue(Clue clue);
+
     Drawable getImageForClue(Key clueName);
 
     public int countFoundClues();

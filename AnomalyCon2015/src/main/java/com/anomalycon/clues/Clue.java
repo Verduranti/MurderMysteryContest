@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(value = "img")
 public class Clue {
 
+    public static final String CLUE_NAME_BUNDLE_ID = "CLUE_NAME";
     private String name;
     private String storyText;
 
@@ -30,7 +31,7 @@ public class Clue {
         this.name = name;
     }
 
-    protected void setStoryText(String storyText) {
+    public void setStoryText(String storyText) {
         this.storyText = storyText;
     }
 

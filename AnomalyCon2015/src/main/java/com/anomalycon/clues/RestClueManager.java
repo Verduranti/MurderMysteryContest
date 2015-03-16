@@ -235,6 +235,16 @@ public class RestClueManager implements ClueInterface {
     }
 
     @Override
+    public SaveClueStatus saveClue(Clue clue) {
+        if(!foundClueMap.containsKey(clue.getName())) {
+            return SaveClueStatus.INVALID;
+        }
+        addClueToFoundMap(clue);
+
+        return SaveClueStatus.SAVED;
+    }
+
+    @Override
     public Drawable getImageForClue(Key clueName) {
         return getFormulaImage(clueName.getKey());
     }
