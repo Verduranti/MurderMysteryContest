@@ -206,11 +206,7 @@ public class RestClueManager implements ClueInterface {
 
     @Override
     public Clue getClue(Key clueName) {
-        if(saveClue(clueName).hasClue())
-        {
-            return foundClueMap.get(clueName.getKey());
-        }
-        return null;
+        return foundClueMap.get(clueName.getKey());
     }
 
     private void addClueToFoundMap(Clue clue) {
