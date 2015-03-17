@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,20 +108,20 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
     }
 
     private void setStatus(final SaveClueStatus status, Dialog dialog) {
-        final Intent intent = new Intent(getActivity(), ClueDetailActivity.class);
+        final FragmentActivity activity = getActivity();
+        final Intent intent = new Intent(activity, ClueDetailActivity.class);
         intent.putExtra(Clue.CLUE_NAME_BUNDLE_ID, mEditText.getText().toString());
         if(status.hasClue()) {
             dialog.dismiss();
         }
         final String text = getResources().getString(status.getStatus());
-        final Context applicationContext = getActivity().getApplicationContext();
-        getActivity().runOnUiThread(new Runnable() {
+        final Context applicationContext = activity.getApplicationContext();
+        activity.runOnUiThread(new Runnable() {
             public void run() {
-                if(status.hasClue()) {
+                if (status.hasClue()) {
                     Toast.makeText(applicationContext, text, Toast.LENGTH_LONG).show();
-                    getActivity().startActivity(intent);
-                }
-                else {
+                    activity.startActivity(intent);
+                } else {
                     mEditText.setError(text);
                 }
             }

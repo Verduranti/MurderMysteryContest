@@ -13,11 +13,11 @@ public class Key  {
     }
 
     public Key(String keyword) {
-        this.keyword = keyword;
+        this.setKey(keyword);
     }
 
     public void setKey(String keyword) {
-        this.keyword = keyword;
+        this.keyword = keyword.toUpperCase();
     }
 
     public String getKey() {

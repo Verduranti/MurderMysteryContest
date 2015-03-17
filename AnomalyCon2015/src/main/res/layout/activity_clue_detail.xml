@@ -15,7 +15,8 @@
     <ProgressBar android:id="@+id/Progress"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:indeterminate="true" />
+        android:indeterminate="true"
+        android:visibility="gone"  />
 
     <com.anomalycon.clues.ClueImageView
         android:id="@+id/ClueImageView"
