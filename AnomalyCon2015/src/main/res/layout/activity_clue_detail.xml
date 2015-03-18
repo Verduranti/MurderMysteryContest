@@ -1,35 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linearLayout1"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    style="@style/LayoutTheme">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport="true"
+            android:id="@+id/linearLayout1"
+            style="@style/LayoutTheme">
 
-    <TextView android:id="@+id/ClueTitle"
-              style="@style/ClueDetailTitle"
-              android:text="TITLE"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content" />
-
-    <ProgressBar android:id="@+id/Progress"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:indeterminate="true"
-        android:visibility="gone"  />
+        android:orientation="vertical">
 
-    <com.anomalycon.clues.ClueImageView
-        android:id="@+id/ClueImageView"
-        style="@style/ClueDetailImage"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        <TextView android:id="@+id/ClueTitle"
+                  style="@style/ClueDetailTitle"
+                  android:text="TITLE"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" />
 
-    <EditText android:id="@+id/ClueNotes"
-              style="@style/InputText"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:gravity="top"
-              android:hint="@string/clueNotesHint"/>
+        <ProgressBar android:id="@+id/Progress"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:indeterminate="true"
+            android:visibility="gone"  />
 
-</LinearLayout>
+        <com.anomalycon.clues.ClueImageView
+            android:id="@+id/ClueImageView"
+            style="@style/ClueDetailImage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <EditText android:id="@+id/ClueNotes"
+                  style="@style/InputText"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:gravity="top"
+                  android:hint="@string/clueNotesHint"/>
+
+    </LinearLayout>
+</ScrollView>

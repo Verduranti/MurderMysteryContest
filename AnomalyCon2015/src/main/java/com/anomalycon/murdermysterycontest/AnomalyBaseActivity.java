@@ -1,7 +1,10 @@
 package com.anomalycon.murdermysterycontest;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MotionEvent;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.anomalycon.clues.ClueInterface;
@@ -30,5 +33,12 @@ public abstract class AnomalyBaseActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), getString(stringId), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        return true;
     }
 }

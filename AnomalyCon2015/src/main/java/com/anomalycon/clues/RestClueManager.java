@@ -217,6 +217,7 @@ public class RestClueManager implements ClueInterface {
     @Override
     public SaveClueStatus saveClue(Key clueName) {
         if(foundClueMap.containsKey(clueName.getKey())) {
+            saveClues();
             return SaveClueStatus.DUPLICATE;
         }
         try {

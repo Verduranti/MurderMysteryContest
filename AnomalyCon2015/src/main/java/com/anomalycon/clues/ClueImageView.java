@@ -28,14 +28,10 @@ public class ClueImageView extends ImageView {
         final Drawable clueImage = getDrawable();
         int width = MeasureSpec.getSize(widthMeasureSpec);
         if(clueImage != null) {
-            System.out.println("Clue is: "+clueImage.getIntrinsicHeight()+" x "+clueImage.getIntrinsicWidth());
             int height = width * clueImage.getIntrinsicHeight() / clueImage.getIntrinsicWidth();
-            System.out.println("  Set width to "+width+" x "+height);
             setMeasuredDimension(width, height);
         }
         else {
-            System.out.println("Clue is null");
-            System.out.println("  Set width to "+width+" x "+width);
             setMeasuredDimension(width, width);
         }
     }
