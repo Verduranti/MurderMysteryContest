@@ -5,7 +5,40 @@
     </style>
 
     <style name="LayoutTheme">
-        <item name="android:background">#f8ecc2</item>
+        <item name="android:background">@color/background</item>
+    </style>
+
+    <style name="InputLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dip</item>
+        <item name="android:layout_marginLeft">12dip</item>
+        <item name="android:layout_marginRight">12dip</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ClueDetailTitle">
+        <item name="android:textSize">30dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">12dip</item>
+        <item name="android:layout_marginLeft">12dip</item>
+        <item name="android:layout_marginRight">12dip</item>
+    </style>
+
+    <style name="ClueDetailImage">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">12dip</item>
+    </style>
+
+    <style name="InputText">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">12dip</item>
+        <item name="android:layout_marginRight">12dip</item>
+        <item name="android:layout_marginBottom">12dip</item>
     </style>
 
     <style name="Buttons">
@@ -13,6 +46,9 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/plate2</item>
         <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/buttonText</item>
     </style>
 
 

@@ -2,8 +2,10 @@ package com.anomalycon.clues;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 
 import com.anomalycon.murdermysterycontest.R;
+import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +52,7 @@ public class ClueManager implements ClueInterface {
         for(String str : clues)
         {
             String[] nameValuePair = str.split("\\|");
-            Clue newClue = new Clue(nameValuePair[0], nameValuePair[1]); //a bit hacktastic
+            Clue newClue = new Clue(nameValuePair[0], nameValuePair[1], false); //a bit hacktastic
             Key newKey = new Key(nameValuePair[0]);
             allClueMap.put(newKey, newClue);
         }
@@ -58,10 +60,8 @@ public class ClueManager implements ClueInterface {
 
     @Override
     public List<String> getClueNames() {
-        List<Key> list = Arrays.asList(foundClueMap.keySet().toArray(new Key[foundClueMap.size()]));
-
         List<String> nameList = new ArrayList<>();
-        for(Key key : list)
+        for(Key key : foundClueMap.keySet())
         {
             nameList.add(key.getKey());
         }
@@ -83,7 +83,6 @@ public class ClueManager implements ClueInterface {
 
     @Override
     public SaveClueStatus saveClue(Key clueName) {
-        boolean returnStatus = false;
         if(foundClueMap.containsKey(clueName)) {
             return SaveClueStatus.DUPLICATE;
         }
@@ -98,6 +97,22 @@ public class ClueManager implements ClueInterface {
     }
 
     @Override
+    public SaveClueStatus saveClue(Clue clue) {
+        Key key = new Key(clue.getName());
+        if(!foundClueMap.containsKey(key)) {
+            return SaveClueStatus.INVALID;
+        }
+        foundClueMap.put(key, clue);
+
+        return SaveClueStatus.SAVED;
+    }
+
+    @Override
+    public Drawable getImageForClue(Key clueName) {
+        return null;
+    }
+
+    @Override
     public int countFoundClues() {
         return foundClueMap.size();
     }
@@ -105,6 +120,11 @@ public class ClueManager implements ClueInterface {
     @Override
     public int countAllClues() {
         return allClueMap.size();
+    }
+
+    @Override
+    public GuessStatus makeGuess(Guess guess) {
+        return GuessStatus.ERROR;
     }
 
 }

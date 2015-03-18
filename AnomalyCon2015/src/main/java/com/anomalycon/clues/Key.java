@@ -3,7 +3,7 @@ package com.anomalycon.clues;
 /**
  * Implementation of Key. No interface at the moment because Key is so simple.
  */
-public class Key {
+public class Key  {
 
     //Keys are all strings in this implementation
     private String keyword;
@@ -13,11 +13,11 @@ public class Key {
     }
 
     public Key(String keyword) {
-        this.keyword = keyword;
+        this.setKey(keyword);
     }
 
     public void setKey(String keyword) {
-        this.keyword = keyword;
+        this.keyword = keyword.toUpperCase();
     }
 
     public String getKey() {
@@ -39,5 +39,12 @@ public class Key {
     @Override
     public int hashCode() {
         return keyword.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Key{" +
+                "keyword='" + keyword + '\'' +
+                '}';
     }
 }

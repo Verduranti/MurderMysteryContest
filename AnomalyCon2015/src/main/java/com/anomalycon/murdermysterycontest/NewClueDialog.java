@@ -2,9 +2,13 @@ package com.anomalycon.murdermysterycontest;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +18,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
+import com.anomalycon.clues.Clue;
 import com.anomalycon.clues.SaveClueStatus;
 
 public class NewClueDialog extends DialogFragment implements OnEditorActionListener {
@@ -75,7 +81,6 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
             @Override
             public void onClick(View onClick) {
                 saveClue(dialog);
-                return;
             }
         });
     }
@@ -83,7 +88,7 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
     @Override
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (EditorInfo.IME_ACTION_SEND == actionId) {
-            saveClue(this.getDialog());
+            saveClue(getDialog());
             return true;
         }
         else {
@@ -102,24 +107,35 @@ public class NewClueDialog extends DialogFragment implements OnEditorActionListe
         }
     }
 
-    private void saveClue(Dialog dialog) {
-        SaveClueStatus status = saveClue(mEditText.getText().toString());
-        switch (status) {
-            case SAVED:
-                dialog.dismiss();
-                //Add intent to open up extra content
-                break;
-            case BLANK:
-                mEditText.setError(getResources().getString(R.string.blankError));
-                break;
-            case DUPLICATE:
-                mEditText.setError(getResources().getString(R.string.duplicateClueError));
-                break;
-            default: // NOT_FOUND, ERROR
-                mEditText.setError(getResources().getString(R.string.badClueError));
-                break;
+    private void setStatus(final SaveClueStatus status, Dialog dialog) {
+        final FragmentActivity activity = getActivity();
+        final Intent intent = new Intent(activity, ClueDetailActivity.class);
+        intent.putExtra(Clue.CLUE_NAME_BUNDLE_ID, mEditText.getText().toString());
+        if(status.hasClue()) {
+            dialog.dismiss();
         }
-        return;
+        final String text = getResources().getString(status.getStatus());
+        final Context applicationContext = activity.getApplicationContext();
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                if (status.hasClue()) {
+                    Toast.makeText(applicationContext, text, Toast.LENGTH_LONG).show();
+                    activity.startActivity(intent);
+                } else {
+                    mEditText.setError(text);
+                }
+            }
+        });
+    }
+
+    private void saveClue(final Dialog dialog) {
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                final SaveClueStatus status = saveClue(mEditText.getText().toString());
+                setStatus(status, dialog);
+            }
+        });
     }
 }
 
