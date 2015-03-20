@@ -1,25 +1,18 @@
 package com.anomalycon.murdermysterycontest;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.anomalycon.clues.ClueInterface;
 import com.anomalycon.clues.Key;
 import com.anomalycon.clues.SaveClueStatus;
 
-import javax.inject.Inject;
-
 public class MainActivity extends AnomalyBaseActivity {
-    final Context activityContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +53,7 @@ public class MainActivity extends AnomalyBaseActivity {
             public void run() {
                 //This fraction sucks. Need 6/10? BAH. Might clean this up.
                 System.out.println(cif.countFoundClues() + " / " + cif.countAllClues());
-                //if (cif.countFoundClues() / ((float) cif.countAllClues()) <= 0.5)
-                if (cif.countFoundClues() == 0) // TODO: to make testing easier remove in favor of the above
+                if (cif.countFoundClues() / ((float) cif.countAllClues()) <= 0.5)
                 {
                     toast(R.string.notEnoughClues);
                 } else {
@@ -106,8 +98,7 @@ public class MainActivity extends AnomalyBaseActivity {
 
     public SaveClueStatus saveClue(String password) {
         final Key key = new Key(password);
-        final SaveClueStatus status = cif.saveClue(key);
-        return status;
+        return cif.saveClue(key);
     }
 
 }

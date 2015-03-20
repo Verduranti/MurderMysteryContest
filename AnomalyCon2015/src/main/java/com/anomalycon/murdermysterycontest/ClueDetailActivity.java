@@ -21,6 +21,7 @@ import com.anomalycon.clues.Key;
 
 public class ClueDetailActivity extends AnomalyBaseActivity {
     private TextView textClueName;
+    private TextView textClueText;
     private EditText editClueNotes;
     private ProgressBar loadingProgress;
     private ClueImageView clueImageView;
@@ -36,6 +37,9 @@ public class ClueDetailActivity extends AnomalyBaseActivity {
         editClueNotes.setText(clue.getStoryText());
 
         if(clue.isFormula()) {
+            setTitle(clue.getFormulaName());
+            textClueText.setVisibility(View.VISIBLE);
+            textClueText.setText(clue.getFormulaText());
             loadingProgress.setVisibility(View.VISIBLE);
             //clueImageView.setImageDrawable(getResources().getDrawable(android.R.drawable.stat_notify_sync));//ic_popup_sync
             AsyncTask.execute(new Runnable() {
@@ -56,6 +60,10 @@ public class ClueDetailActivity extends AnomalyBaseActivity {
                 }
             });
         }
+        else {
+            textClueText.setVisibility(View.GONE);
+            setTitle(clue.getName());
+        }
     }
 
     private void saveClue() {
@@ -74,6 +82,7 @@ public class ClueDetailActivity extends AnomalyBaseActivity {
         setContentView(R.layout.activity_clue_detail);
 
         textClueName = (TextView) findViewById(R.id.ClueTitle);
+        textClueText = (TextView) findViewById(R.id.ClueText);
         editClueNotes = (EditText) findViewById(R.id.ClueNotes);
         loadingProgress = (ProgressBar) findViewById(R.id.Progress);
         clueImageView = (ClueImageView) findViewById(R.id.ClueImageView);

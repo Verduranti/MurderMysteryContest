@@ -47,12 +47,14 @@ public class RestClueManager implements ClueInterface {
     //private static Context myContext;
 
     private Map<String, Clue> loadSavedClues() {
-        try {
-            final String contents = Files.toString(clueFile, Charset.defaultCharset());
+        if(clueFile.canRead()) {
+            try {
+                final String contents = Files.toString(clueFile, Charset.defaultCharset());
 
-            return parseJson(contents, CLUE_MAP_TYPE);
-        } catch (IOException e) {
-            e.printStackTrace();
+                return parseJson(contents, CLUE_MAP_TYPE);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return new HashMap<>();
     }
