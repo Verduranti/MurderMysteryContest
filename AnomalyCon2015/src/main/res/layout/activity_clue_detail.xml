@@ -17,6 +17,12 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content" />
 
+        <TextView android:id="@+id/ClueText"
+                  style="@style/ClueDetailText"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:visibility="gone" />
+
         <ProgressBar android:id="@+id/Progress"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

@@ -5,10 +5,8 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 import com.anomalycon.murdermysterycontest.R;
-import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,10 +23,6 @@ public class ClueManager implements ClueInterface {
     private Map<Key, Clue> allClueMap;
 
     //private static Context myContext;
-
-    private ClueManager() {
-        //not used
-    }
 
     public ClueManager(Context context) {
         foundClueMap = new HashMap<>();
@@ -52,7 +46,7 @@ public class ClueManager implements ClueInterface {
         for(String str : clues)
         {
             String[] nameValuePair = str.split("\\|");
-            Clue newClue = new Clue(nameValuePair[0], nameValuePair[1], false); //a bit hacktastic
+            Clue newClue = new Clue(nameValuePair[0], nameValuePair[1]);
             Key newKey = new Key(nameValuePair[0]);
             allClueMap.put(newKey, newClue);
         }

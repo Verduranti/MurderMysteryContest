@@ -1,5 +1,6 @@
 package com.anomalycon.clues;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -15,36 +16,55 @@ public class Clue {
     private String name;
     private String storyText;
 
+    @JsonProperty("formula")
+    private String formulaName;
+    private String flavorText;
+
     @JsonProperty("isFormula")
     private boolean formula;
 
-    private Clue() {
+    public Clue() {
     }
 
-    protected Clue(String name, String storyText, boolean formula) {
+    public Clue(String name, String storyText, String formulaName, String flavorText, boolean formula) {
         this.name = name;
         this.storyText = storyText;
+        this.formulaName = formulaName;
+        this.flavorText = flavorText;
         this.formula = formula;
     }
 
-    protected void setName(String name) {
+    public Clue(String name, String storyText) {
         this.name = name;
+        this.storyText = storyText;
+        this.formulaName = "";
+        this.flavorText = "";
+        this.formula = false;
     }
 
     public void setStoryText(String storyText) {
         this.storyText = storyText;
     }
 
-    public void setFormula(boolean formula) {
-        this.formula = formula;
+    public String getName() {
+        return name;
     }
 
     public String getStoryText() {
         return storyText;
     }
 
-    public String getName() {
-        return name;
+    public String getFormulaName() {
+        return formulaName;
+    }
+
+    public String getFlavorText() {
+        return flavorText;
+    }
+
+    @JsonIgnore
+    public String getFormulaText() {
+        return getFormulaName()+"\n\n"+ flavorText+"\n\n- Dr. Shniffenpot";
     }
 
     public boolean isFormula() {
