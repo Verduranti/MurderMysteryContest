@@ -104,7 +104,7 @@ public class RestClueManager implements ClueInterface {
     private ClueCount getClueCount() {
         final HttpClient httpClient = new DefaultHttpClient();
         final HttpContext localContext = new BasicHttpContext(); // Daggerify these?
-        final HttpGet get = new HttpGet("http://anomalycon-server.heroku.com/clue");
+        final HttpGet get = new HttpGet("http://anomalycon-server.herokuapp.com/clue");
         try {
             final HttpResponse response = httpClient.execute(get, localContext);
 
@@ -186,12 +186,12 @@ public class RestClueManager implements ClueInterface {
             final StringEntity se = new StringEntity(json.toString());
             se.setContentType("application/json");
 
-            final HttpPost post = new HttpPost("http://anomalycon-server.heroku.com/guess");
+            final HttpPost post = new HttpPost("http://anomalycon-server.herokuapp.com/guess");
             post.setEntity(se);
 
             final HttpResponse response = httpClient.execute(post, localContext);
 
-            if(response.getStatusLine().getStatusCode() == 201) {
+            if(response.getStatusLine().getStatusCode() == 204) { // 201 is bad here, it means the GET method was called
                 return GuessStatus.SUBMITTED;
             }
             System.out.println("Guess rejected: "+response.getStatusLine().toString());
