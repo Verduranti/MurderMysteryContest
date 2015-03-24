@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.anomalycon.clues.ClueInterface;
 import com.anomalycon.clues.Guess;
 import com.anomalycon.clues.GuessStatus;
+import com.anomalycon.clues.SaveClueStatus;
 
 import javax.inject.Inject;
 
@@ -79,7 +80,22 @@ public class SubmitGuessActivity extends AnomalyBaseActivity {
         });
     }
 
+    private boolean errorIfBlank(EditText field) {
+        if(field.getText().length() == 0) {
+            field.setError(getResources().getString(SaveClueStatus.BLANK.getStatus()));
+            return true;
+        }
+        return false;
+    }
+
     private void submitGuess() {
+        if(errorIfBlank(textName) |
+           errorIfBlank(textEmail) |
+           errorIfBlank(textGuessMurderer) |
+           errorIfBlank(textGuessWeapon) |
+           errorIfBlank(textGuessFormulae) ) {
+            return;
+        }
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
