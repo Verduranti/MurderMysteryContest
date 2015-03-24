@@ -85,9 +85,9 @@ public class SubmitGuessActivity extends AnomalyBaseActivity {
             public void run() {
                 String name = textName.getText().toString();
                 String email = textEmail.getText().toString();
-                String guess = "Murderer:" + textGuessMurderer.getText().toString() +
-                             "\nWeapon:" + textGuessWeapon.getText().toString() +
-                             "\nFormulae:" + textGuessFormulae.getText().toString();
+                String guess = "Murderer: " + textGuessMurderer.getText().toString() +
+                             "\nWeapon: " + textGuessWeapon.getText().toString() +
+                             "\nFormulae: " + textGuessFormulae.getText().toString();
 
                 submitGuess(new Guess(name, email, guess));
             }
